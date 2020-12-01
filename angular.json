@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "covid-tracker"
+  "defaultProject": "covid-tracker",
+  "cli": {
+    "analytics": "969f4bec-82a1-41f7-9b56-6823a6b05e48"
+  }
 }
