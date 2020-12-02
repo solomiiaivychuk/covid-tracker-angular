@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalDataSummary } from 'src/app/modals/global-data';
+import { GlobalDataInterface } from 'src/app/modals/global-data-interface';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
@@ -10,8 +10,12 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 
 export class CountriesComponent implements OnInit {
 
-  countriesData!: GlobalDataSummary[];
+  countriesData!: GlobalDataInterface[];
   countriesList: string[] = [];
+  totalConfirmed = 0;
+  totalActive = 0;
+  totalDeaths = 0;
+  totalRecovered = 0;
   constructor(private dataService: DataServiceService) { }
 
   ngOnInit(): void {
@@ -22,5 +26,16 @@ export class CountriesComponent implements OnInit {
       })
     })
   }
-
+  updateValues(country: string) {
+    console.log(country);
+    this.countriesData.forEach((countryData: any) => {
+      if(countryData.country == country) {
+        
+        this.totalConfirmed = countryData.confirmed;
+        this.totalActive = countryData.active;
+        this.totalDeaths = countryData.deaths;
+        this.totalRecovered =countryData.recovered;
+      }
+    })
+  }
 }

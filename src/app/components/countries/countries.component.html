@@ -4,10 +4,18 @@
   <div class="mx-auto">
     <div class="form-group col-lg-5 mx-auto">
       <label for="country">Select country</label>
-      <select name="" class="form-control" id="country">
-        <option value="country" *ngFor="let country of countriesList">{{country}}</option>
+      <select name="" class="form-control" id="country"#input (change)="updateValues(input.value)">
+        <option value="{{country}}" *ngFor="let country of countriesList">{{country}}</option>
       </select>
     </div>
   </div>
+  
+  <app-dashboard-cards 
+    [totalConfirmed]="totalConfirmed"
+    [totalActive]="totalActive"
+    [totalDeaths]="totalDeaths"
+    [totalRecovered]="totalRecovered"
+  ></app-dashboard-cards>
+  
 </div>
 

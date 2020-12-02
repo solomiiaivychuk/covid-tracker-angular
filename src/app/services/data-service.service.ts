@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { GlobalDataSummary } from '../modals/global-data';
+import { GlobalDataInterface } from '../modals/global-data-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class DataServiceService {
   getGlobalData() {
     return this.http.get(this.globalDataUrl, {responseType: 'text'}).pipe(
       map(result => {
-        let data: GlobalDataSummary[] = [];
+        let data: GlobalDataInterface[] = [];
         let finalData: any = {};
         let rows = result.split('\n');
         rows.splice(0, 1);
@@ -36,7 +35,7 @@ export class DataServiceService {
            * if the country does not exist => 
            * create new object
            */
-          let countryObj: GlobalDataSummary = finalData[rawData.country];
+          let countryObj: GlobalDataInterface = finalData[rawData.country];
           if (countryObj) {
             countryObj.confirmed = rawData.confirmed + Number(countryObj.confirmed);
             countryObj.deaths = rawData.deaths + Number(countryObj.deaths);
@@ -48,7 +47,7 @@ export class DataServiceService {
           }
         })
         //console.log(finalData);
-        return <GlobalDataSummary[]>Object.values(finalData);
+        return <GlobalDataInterface[]>Object.values(finalData);
       })
     )
   }

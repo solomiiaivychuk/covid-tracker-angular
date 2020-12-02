@@ -1,52 +1,88 @@
 <div class="jumbotron bg-white text-center">
   <h1 class="display-4">Covid-19 Cases Tracker</h1>
   <hr>
-  <div class="row">
+  <app-dashboard-cards 
+    [totalConfirmed]="totalConfirmed"
+    [totalActive]="totalActive"
+    [totalDeaths]="totalDeaths"
+    [totalRecovered]="totalRecovered"
+  
+  ></app-dashboard-cards>
+</div>
 
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label mb-4">
-          Confirmed
-        </div>
-        <div class="value">
-          {{totalConfirmed}}
-        </div>
+<div class="ui form">
+  <div class="inline fields">
+    <label for="case">Select the cases:</label>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input 
+          type="radio" 
+          id="confirmed" 
+          value="confirmed" 
+          name="case" 
+          checked="" 
+          tabindex="0" 
+          class="hidden"
+          #confirmed
+          (click)="updateChart(confirmed)"
+          >
+        <label for="confirmed">Confirmed</label>
       </div>
     </div>
-
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label mb-4">
-          Active
-        </div>
-        <div class="value">
-          {{totalActive}}
-        </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input 
+          type="radio" 
+          id="active" 
+          value="active" 
+          name="case" 
+          tabindex="0" 
+          class="hidden"
+          #active
+          (click)="updateChart(active)"
+          >
+        <label for="active">Active</label>
       </div>
     </div>
-
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label mb-4">
-          Deaths
-        </div>
-        <div class="value">
-          {{totalDeaths}}
-        </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input 
+          type="radio" 
+          id="deaths" 
+          value="deaths" 
+          name="case" 
+          tabindex="0" 
+          class="hidden"
+          #deaths
+          (click)="updateChart(deaths)"
+          >
+        <label for="deaths">Deaths</label>
       </div>
     </div>
-
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label mb-4">
-          Recovered
-        </div>
-        <div class="value">
-          {{totalRecovered}}
-        </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input 
+          type="radio" 
+          id="recovered" 
+          value="recovered" 
+          name="case" 
+          tabindex="0" 
+          class="hidden"
+          #recovered
+          (click)="updateChart(recovered)"
+          >
+        <label for="recovered">Recovered</label>
       </div>
     </div>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col">
+    <google-chart [data]="pieChart"></google-chart>
+  </div>
+  <div class="col">
+    <google-chart [data]="columnChart"></google-chart>
   </div>
 </div>
 

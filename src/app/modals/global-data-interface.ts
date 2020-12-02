@@ -1,4 +1,4 @@
-export interface GlobalDataSummary {
+export interface GlobalDataInterface {
   country ?: string,
   confirmed ?: number,
   deaths ?: number,

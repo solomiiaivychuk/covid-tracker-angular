@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleChartInterface } from 'ng2-google-charts';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { GlobalDataSummary } from '../../modals/global-data';
+import { GlobalDataInterface } from '../../modals/global-data-interface';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,10 +13,44 @@ export class HomeComponent implements OnInit {
   totalActive = 0;
   totalDeaths = 0;
   totalRecovered = 0;
-  globalData!: GlobalDataSummary[];
+  globalData!: GlobalDataInterface[];
+  pieChart: GoogleChartInterface = {
+    chartType : 'PieChart'
+  };
+  columnChart: GoogleChartInterface = {
+    chartType: 'ColumnChart'
+  }
 
   constructor(private dataService: DataServiceService) { }
 
+  initChart() {
+
+    let dataTable: any = [];
+    dataTable.push(["Country", "Cases"]);
+    this.globalData.forEach((countryData: any) => {
+      if (countryData.confirmed > 300000) {
+        dataTable.push([countryData.country, countryData.confirmed]);
+      }
+    });
+    this.pieChart = {
+      chartType: 'PieChart',
+      dataTable: dataTable,
+      options: {
+        width:500,
+        height: 500,
+        'Country': 'Cases'
+      },
+    };
+    this.columnChart = {
+      chartType: 'ColumnChart',
+      dataTable: dataTable,
+      options: {
+        width: 500,
+        height: 500,
+        'Country': 'Cases'
+      },
+    };
+  }
   ngOnInit(): void {
     this.dataService.getGlobalData().subscribe(
       {
@@ -30,6 +65,7 @@ export class HomeComponent implements OnInit {
               this.totalRecovered += country.recovered;
             }
           })
+          this.initChart();
         }
       }
     );
