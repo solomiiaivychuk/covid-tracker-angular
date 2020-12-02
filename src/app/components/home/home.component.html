@@ -1,15 +1,16 @@
 <div class="jumbotron bg-white text-center">
   <h1 class="display-4">Covid-19 Cases Tracker</h1>
   <hr>
-  <app-dashboard-cards 
-    [totalConfirmed]="totalConfirmed"
-    [totalActive]="totalActive"
-    [totalDeaths]="totalDeaths"
-    [totalRecovered]="totalRecovered"
-  
-  ></app-dashboard-cards>
 </div>
+<app-dashboard-cards 
+  [totalConfirmed]="totalConfirmed"
+  [totalActive]="totalActive"
+  [totalDeaths]="totalDeaths"
+  [totalRecovered]="totalRecovered"
 
+></app-dashboard-cards>
+
+<!--
 <div class="ui form">
   <div class="inline fields">
     <label for="case">Select the cases:</label>
@@ -77,6 +78,7 @@
   </div>
 </div>
 
+
 <div class="row">
   <div class="col">
     <google-chart [data]="pieChart"></google-chart>
@@ -85,7 +87,7 @@
     <google-chart [data]="columnChart"></google-chart>
   </div>
 </div>
-
+-->
 
 
 

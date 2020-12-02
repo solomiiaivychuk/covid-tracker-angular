@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { GlobalDataInterface } from '../../modals/global-data-interface';
+import { GlobalDataInterface } from '../../interfaces/global-data-interface';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,15 +23,24 @@ export class HomeComponent implements OnInit {
 
   constructor(private dataService: DataServiceService) { }
 
-  initChart() {
+  initChart(caseType: string) {
 
     let dataTable: any = [];
+    let value: number = 0;
     dataTable.push(["Country", "Cases"]);
     this.globalData.forEach((countryData: any) => {
-      if (countryData.confirmed > 300000) {
-        dataTable.push([countryData.country, countryData.confirmed]);
+      if (caseType == 'confirmed') {
+        value = countryData.confirmed;
+      } else if(caseType == 'active') {
+        value = countryData.active;
+      } else if(caseType == 'deaths') {
+        value = countryData.deaths;
+      } else if(caseType == 'recovered') {
+        value = countryData.recovered;
       }
+      dataTable.push([countryData.country, value]);
     });
+    //console.log(dataTable);
     this.pieChart = {
       chartType: 'PieChart',
       dataTable: dataTable,
@@ -55,7 +64,7 @@ export class HomeComponent implements OnInit {
     this.dataService.getGlobalData().subscribe(
       {
         next : (result) => {
-          console.log(result);
+          //console.log(result);
           this.globalData = result;
           result.forEach((country: any) => {
             if (!Number.isNaN(country.confirmed)) {
@@ -65,10 +74,13 @@ export class HomeComponent implements OnInit {
               this.totalRecovered += country.recovered;
             }
           })
-          this.initChart();
+          this.initChart('confirmed');
         }
-      }
-    );
+      });
+  }
+  updateChart(input : HTMLInputElement) {
+    console.log(input.value);
+    this.initChart(input.value);
   }
 
 }
