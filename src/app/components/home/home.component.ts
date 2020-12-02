@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from 'src/app/services/data-service.service';
-
+import { GlobalDataSummary } from '../../modals/global-data';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  totalConfirmed = 0;
+  totalActive = 0;
+  totalDeaths = 0;
+  totalRecovered = 0;
+  globalData!: GlobalDataSummary[];
 
   constructor(private dataService: DataServiceService) { }
 
@@ -15,6 +21,15 @@ export class HomeComponent implements OnInit {
       {
         next : (result) => {
           console.log(result);
+          this.globalData = result;
+          result.forEach((country: any) => {
+            if (!Number.isNaN(country.confirmed)) {
+              this.totalActive += country.active;
+              this.totalConfirmed += country.confirmed;
+              this.totalDeaths += country.deaths;
+              this.totalRecovered += country.recovered;
+            }
+          })
         }
       }
     );
